@@ -5,13 +5,28 @@ pipeline {
         maven 'Maven'
         jdk 'JAVA21'
     }
+
     stages {
-        stage('Build') {
+
+        stage('Check Java') {
             steps {
-                
-                sh 'mvn -f pom.xml clean install '
+                sh '''
+                    echo "JAVA_HOME=$JAVA_HOME"
+                    which java
+                    java -version
+                    which javac
+                    javac -version
+                    mvn -version
+                '''
             }
         }
+
+        stage('Build') {
+            steps {
+                sh 'mvn -f pom.xml clean install'
+            }
+        }
+
         stage('Test') {
             steps {
                 sh 'mvn -f pom.xml test'
@@ -22,9 +37,10 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') { 
+
+        stage('Deliver') {
             steps {
-                sh './jenkins/scripts/deliver.sh' 
+                sh './jenkins/scripts/deliver.sh'
             }
         }
     }
