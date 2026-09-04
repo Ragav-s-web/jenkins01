@@ -1,9 +1,8 @@
 pipeline {
-    agent {
-        label '!windows'
-    }
-    options {
-        skipStagesAfterUnstable()
+    agent any
+
+    tools {
+        maven 'Maven'
     }
     stages {
         stage('Build') {
