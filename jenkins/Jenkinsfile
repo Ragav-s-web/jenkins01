@@ -8,12 +8,12 @@ pipeline {
         stage('Build') {
             steps {
                 
-                sh 'maven -f src/pom.xml clean install '
+                sh 'mvn -f pom.xml clean install '
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn -f src/pom.xml test'
+                sh 'mvn -f pom.xml test'
             }
             post {
                 always {
